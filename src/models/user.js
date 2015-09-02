@@ -5,7 +5,8 @@ var Promise = require("bluebird");
 var UserSchema = new Schema({
   creationDate: {type:Date, default: Date.now},
   facebookId: String,
-  accessToken: String
+  accessToken: String,
+  email: String
 });
 
 UserSchema.statics.findOrCreate = function(filters){
@@ -13,8 +14,7 @@ UserSchema.statics.findOrCreate = function(filters){
     var User = this;
     this.find(filters,function(err,results){
       if(results.length == 0){
-        var newUser = new User();
-        newUser.facebookId = filters.facebookId;
+        var newUser = new User(filters);
         newUser.save(function(err,doc){
           if(!err){
             resolve(doc);
@@ -33,4 +33,4 @@ UserSchema.statics.findOrCreate = function(filters){
   })
 }
 
-module.exports = mongoose.model('CheckIn',CheckInSchema);
+module.exports = mongoose.model('User', UserSchema);

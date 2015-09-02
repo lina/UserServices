@@ -20,10 +20,4 @@ UserManager.prototype.authenticateToken = function(token) {
   });
 };
 
-UserManager.prototype.findOrCreateUser = function(filters){
-  return new Promise(function(resolve,reject){
-    //call find or create in model
-  });
-};
-
 module.exports = UserManager;

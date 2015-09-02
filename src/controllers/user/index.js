@@ -1,36 +1,12 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Promise = require("bluebird");
+var express = require('express');
+var router = express.Router();
+var implementation = require('./implementation');
 
-var UserSchema = new Schema({
-  creationDate: {type:Date, default: Date.now},
-  facebookId: String,
-  accessToken: String
-});
+router.use(require('body-parser').json());
+router.use(require('cors')());
 
-UserSchema.statics.findOrCreate = function(filters){
-  return new Promise(function(resolve,reject){
-    var User = this;
-    this.find(filters,function(err,results){
-      if(results.length == 0){
-        var newUser = new User();
-        newUser.facebookId = filters.facebookId;
-        newUser.save(function(err,doc){
-          if(!err){
-            resplve(doc);
-          }else{
-            reject(err);
-          }
-        });
-      }else{
-        if(!err){
-          resolve(results[0]);
-        }else{
-          reject(err);
-        }
-      }
-    });
-  })
-}
+// router.get('/', implementation.getCheckIn);
 
-module.exports = mongoose.model('CheckIn',CheckInSchema);
+router.post('/', implementation.userLogIn);
+
+module.exports = router;
