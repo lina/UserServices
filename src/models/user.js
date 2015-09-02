@@ -1,36 +1,41 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var Promise = require("bluebird");
 
-var UserSchema = new Schema({
+var UserSchema = new mongoose.Schema({
   creationDate: {type:Date, default: Date.now},
   facebookId: String,
   accessToken: String,
   email: String
 });
 
-UserSchema.statics.findOrCreate = function(filters){
+UserSchema.statics.findOrCreate = function(token, userData){
+  var User = this;
   return new Promise(function(resolve,reject){
-    var User = this;
-    this.find(filters,function(err,results){
-      if(results.length == 0){
-        var newUser = new User(filters);
-        newUser.save(function(err,doc){
-          if(!err){
-            resolve(doc);
-          }else{
-            reject(err);
-          }
-        });
+    User.findOne({
+      facebookId: userData.id
+    }).then(function(user){
+      if(user){
+        // retrieved existing user
+        console.log('Successfully retrieved new user:', user);
+        resolve(user);
       }else{
-        if(!err){
-          resolve(results[0]);
-        }else{
-          reject(err);
-        }
+        // user doesn't exist; create new user
+        var newUser = new User({
+          facebookId: userData.id,
+          accessToken: token,
+          email: userData.email
+        });
+        newUser.save(function(err,doc){
+          if(err){ reject(err); }
+          console.log('Successfully created new user:', doc);
+          resolve(doc);
+        });
       }
+    }).catch(function(err){
+      console.log('Error creating or retrieving user:', err);
+      reject(err);
     });
-  })
+  });
 }
 
 module.exports = mongoose.model('User', UserSchema);

@@ -5,8 +5,8 @@ var implementation = require('./implementation');
 router.use(require('body-parser').json());
 router.use(require('cors')());
 
-// router.get('/', implementation.getCheckIn);
+// router.get('/', implementation.getUser);
 
-router.post('/', implementation.userLogIn);
+router.post('/', implementation.logUserIn);
 
 module.exports = router;
