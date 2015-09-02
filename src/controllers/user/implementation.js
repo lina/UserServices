@@ -1,22 +1,23 @@
-var request = require('request');
+var UserManager = require('../../managers/user-manager/');
 var User = require('../../models/user');
+var userManager = new UserManager();
 
 module.exports = {
 
   userLogIn : function(req,res){
-    console.log('pinged');
     var token = req.body.token;
-    console.log(token);
+    var userData = req.body.userData;
     // Params and stuff
-    request.get("https://graph.facebook.com/v2.4/me?" 
-      + "access_token=" + token + "&" + 
-      "fields=id,name,gender,location,website,picture,relationship_status&" + 
-      "format=json", 
+    console.log(token, userData);
+    userManager.logUserIn(token, userData)
+      .then(function(body){
+        console.log(body);
+        res.sendStatus(200);
+      })
+      .catch(function(err){
+        res.sendStatus(500);
+      });
 
-      function(err, resp, data){
-        console.log(resp.body);
-        res.send(resp.body);
-      }
-    )
   }
+
 };
