@@ -1,22 +1,14 @@
-var User = require('../../models/user');
+var request = require('request');
 
 function UserManager(){
 
 };
 
-UserManager.prototype.authenticateToken = function(token) {
+UserManager.prototype.logUserIn = function(token, userData) {
   return new Promise(function(resolve,reject){
-    User.findOne({ access_token: token },
-      function(err, user) {
-        if(err) {
-          return reject(err)
-        }
-        if(!user) {
-          return reject(new Error('Could not validate token'));
-        }
-        return resolve(user);
-      }
-    );
+    // Write data and token to database....
+    // Have fun here
+
   });
 };
 
