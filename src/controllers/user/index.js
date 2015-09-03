@@ -1,12 +1,12 @@
 var express = require('express');
-var router = express.Router();
+// var router = express.Router();
 var implementation = require('./implementation');
 
-router.use(require('body-parser').json());
-router.use(require('cors')());
+module.exports = function(router){
 
-// router.get('/', implementation.getUser);
+  // router.get('/', implementation.getUser);
+  router.post('/', implementation.logUserIn);
 
-router.post('/', implementation.logUserIn);
+};
 
-module.exports = router;
+

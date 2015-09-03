@@ -16,7 +16,7 @@ UserSchema.statics.findOrCreate = function(token, userData){
     }).then(function(user){
       if(user){
         // retrieved existing user
-        console.log('Successfully retrieved new user:', user);
+        console.log('Successfully retrieved user:', user);
         resolve(user);
       }else{
         // user doesn't exist; create new user
