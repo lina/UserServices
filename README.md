@@ -10,9 +10,8 @@ npm install
 
 ### Development
 
-```
-node server.js
-```
+Make sure mongo is running locally and run `node src/server.js`.
+
 
 ### Routes
 

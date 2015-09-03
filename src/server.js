@@ -28,8 +28,7 @@ app.use('/api/user', userRouter);
 // app.use(helpers.errorLogger);
 // app.use(helpers.errorHandler);
 
-require('./src/users/userRoutes')(userRouter);
-// require('./src/controllers/user/')(userRouter);
+require('./users/userRoutes')(userRouter);
 
 
 //////////////////////////////////
