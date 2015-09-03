@@ -5,7 +5,7 @@ module.exports = {
     var token = req.body.token,
         userData = req.body.userData;
 
-    User.findOrCreate(token, userData)
+    User.findOrCreate(userData.id)
       .then(function(user){
         if(user){
           // retrieved existing user
