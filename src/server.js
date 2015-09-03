@@ -37,3 +37,5 @@ require('./users/userRoutes')(userRouter);
 var server = app.listen(process.env.PORT || 3002, function (){
   console.log('UserServices listening on', server.address().address, server.address().port);
 });
+
+module.exports = app;
