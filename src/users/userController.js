@@ -5,11 +5,15 @@ module.exports = {
     var token = req.body.token,
         userData = req.body.userData;
 
+    if (!userData || !token) {
+      res.sendStatus(400);
+      return;
+    }
+
     User.findOrCreate(userData.id)
       .then(function(user){
         if(user){
           // retrieved existing user
-          console.log('Successfully retrieved user');
           res.status(200).send(user);
           next(user)
         }else{
@@ -20,17 +24,13 @@ module.exports = {
             email: userData.email
           }).save(function(err, newUser){
             if(err){ return new Error(err); }
-            console.log('Successfully created new user');
             res.status(201).send(newUser);
             next(newUser);
           });
         }
       }).catch(function(err){
-        console.log('error retriving/creating user:', err);
         res.status(500).send(err);
         next(err)
       });
-  },
-
-  getUser: function(req, res, next){}
+  }
 }
