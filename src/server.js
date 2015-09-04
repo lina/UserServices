@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 //////////////////////////////////
 // connect w/ db
 //////////////////////////////////
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/user');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/haunt_userservices');
 
 
 //////////////////////////////////

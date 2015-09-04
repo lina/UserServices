@@ -10,20 +10,18 @@ module.exports = {
       return;
     }
 
-    User.findOrCreate(userData.id)
+    User.findOne({ fbId: userData.id })
       .then(function(user){
         if(user){
           // retrieved existing user
           res.status(200).send(user);
           next(user)
         }else{
-          // create new user
           new User({
-            facebookId: userData.id,
+            fbId: userData.id,
             accessToken: token,
             email: userData.email
-          }).save(function(err, newUser){
-            if(err){ return new Error(err); }
+          }).save().then(function(newUser){
             res.status(201).send(newUser);
             next(newUser);
           });
@@ -32,5 +30,15 @@ module.exports = {
         res.status(500).send(err);
         next(err)
       });
+  },
+
+  createUser: function(userData, token){
+    // expand schema with userData
+    return new User({
+      fbId: userData.id,
+      accessToken: token,
+      email: userData.email
+    }).save();
   }
-}
+
+};
