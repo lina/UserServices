@@ -1,6 +1,6 @@
 ## User Services
 
-Services to handle user login and data, for ProjectJLOR.  
+Services to handle user login and data, for ProjectJLOR.
 
 
 ### Setup
@@ -21,20 +21,58 @@ Pass an access token, a user's Facebook ID and email.  Additional request parame
 
 ```
 {
-    "token": "token1234",
-    "userData": {
-        "id":"1649273925343025",
-        "name":"Omar Shaikh",
-        "gender":"male",
-        "location": {"id":"111304768888099","name":"Dhahran, Ash Sharqiyah"},
-        "website":"www.awesomeomar.com",
-        "picture":{
-            "data": {
-                "is_silhouette":true,
-                "url":"https:\/\/fbcdn-profile-a.akamaihd.net\/hprofile-ak-xpf1\/v\/t1.0-1\/c15.0.50.50\/p50x50\/10354686_10150004552801856_220367501106153455_n.jpg?oh=82c2ce067f9c7f2c0a66d1efb16730e7&oe=5670F72F&__gda__=1450287355_17925d7381c8da5663c2349483f4b032"
-            }
+  "token": "testToken",
+  "userData": {
+    "id": "718325719",
+    "name": "James Conkling",
+    "gender": "male",
+    "location": {
+      "id": "110184922344060",
+      "name": "Washington, District of Columbia"
+    },
+    "likes": {
+      "data": [
+        {
+          "name": "The Forests Dialogue",
+          "id": "113670252007668",
+          "created_time": "2015-07-18T23:44:50+0000"
         },
-        "email":"omar\u0040awesomeomar.com"
+        {
+          "name": "Bearcat Wildcat",
+          "id": "1686033758292206",
+          "created_time": "2015-06-22T20:43:20+0000"
+        },
+        ...
+      ],
+      "paging": {
+        "cursors": {
+          "before": "MTEzNjcwMjUyMDA3NjY4",
+          "after": "MjAzMzU0ODM2MzU2NTAz"
+        },
+        "next": "https://graph.facebook.com/v2.4/718325719/likes?access_token={{access_token}}&pretty=0&limit=25&after=MjAzMzU0ODM2MzU2NTAz"
+      }
+    },
+    "link": "http://www.facebook.com/718325719",
+    "feed": {
+      "data": [
+        {
+          "story": "James Conkling shared a link.",
+          "created_time": "2015-08-07T05:29:34+0000",
+          "id": "718325719_10155854330400720"
+        },
+        {
+          "message": "fyi",
+          "created_time": "2015-08-03T14:48:15+0000",
+          "id": "718325719_10204730491603625"
+        },
+        ...
+      ],
+      "paging": {
+        "previous": "https://graph.facebook.com/v2.4/718325719/feed?since=1438925374&access_token={{access_token}}&limit=25&__paging_token=enc_AdCJOAYm7jnpD5HqMFeNbmqJxjqJZB2C3gvt6tefh5GYZA7DA9AKRBA94eaEPfrvzKg2ou4vWYVyyGILj7ImdkzIsX&__previous=1",
+        "next": "https://graph.facebook.com/v2.4/718325719/feed?access_token={{access_token}}&limit=25&until=1420070750&__paging_token=enc_AdBRe5r5ACbT2ZCbOZCNlL7R2w6flLrArZCZBZCU9b43ZCUIhniZBrQWWsmk5i154XcfJXjZBAkCUwFJ4KQam50TZBagco16ZA"
+      }
     }
+  }
 }
+
 ```
