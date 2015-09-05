@@ -15,9 +15,17 @@ Make sure mongo is running locally and run `node src/server.js`.
 
 ### Routes
 
+#### GET /api/user/:fbId
+
+Retrieve all userData for user with facebook id `:fbId`.
+
+#### GET /api/user/:fbId/fields/:fields
+
+Retrieve all userData for user with facebook id `:fbId` limited to `:fields`, where `:fields` is a comma-separated list.
+
 #### POST /api/user
 
-Pass an access token, a user's Facebook ID and email.  Additional request parameters will be safely ignored, meaning you can send large chunks of user data without having to parse it to match the DB schema.
+Pass an access token, a user's Facebook ID and email.  The DB schema will grow to match any fields included in userData.
 
 ```
 {
