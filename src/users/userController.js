@@ -1,4 +1,5 @@
 var User = require('./userModel');
+var _ = require('underscore');
 
 module.exports = {
   logUserIn: function(req, res, next){
@@ -10,27 +11,32 @@ module.exports = {
       return;
     }
 
-    User.findOrCreate(userData.id)
+    User.findOne({ fbId: userData.id })
       .then(function(user){
         if(user){
           // retrieved existing user
           res.status(200).send(user);
           next(user)
         }else{
-          // create new user
-          new User({
-            facebookId: userData.id,
-            accessToken: token,
-            email: userData.email
-          }).save(function(err, newUser){
-            if(err){ return new Error(err); }
-            res.status(201).send(newUser);
-            next(newUser);
+          // expand schema
+          var userDataFormatted = _.extend(_.omit(userData, 'id'), {
+            token: token,
+            fbId: userData.id
           });
+
+          User.parseUserData(userDataFormatted);
+
+          // create new user
+          new User(userDataFormatted).save()
+            .then(function(newUser){
+              res.status(201).send(newUser);
+              next(newUser);
+            });
         }
-      }).catch(function(err){
+      }.bind(this)).catch(function(err){
         res.status(500).send(err);
         next(err)
       });
   }
-}
+
+};
