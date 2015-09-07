@@ -15,7 +15,7 @@ module.exports = {
       .then(function(user){
         if(user){
           // retrieved existing user
-          res.status(200).send(user);
+          res.status(200).send(user.fbId);
           next(user)
         }else{
           // expand schema
@@ -29,7 +29,7 @@ module.exports = {
           // create new user
           new User(userDataFormatted).save()
             .then(function(newUser){
-              res.status(201).send(newUser);
+              res.status(201).send(newUser.fbId);
               next(newUser);
             });
         }
@@ -37,6 +37,28 @@ module.exports = {
         res.status(500).send(err);
         next(err)
       });
-  }
+  },
+
+  getUser: function(req, res, next){
+    var fbId = req.params.fbId;
+
+    User.findOne({ fbId: fbId })
+      .then(function(user){
+        res.status(200).send(user);
+        next(user);
+      });
+  },
+
+  getUserByFields: function(req, res, next){
+    var fbId = req.params.fbId;
+    var fields = req.params.fields.split(',');
+
+    User.findOne({ fbId: fbId })
+      .then(function(user){
+        var userFiltered = _.pick(user._doc, fields);
+        res.status(200).send(userFiltered);
+        next(userFiltered);
+      });
+  },
 
 };
