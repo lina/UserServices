@@ -15,7 +15,7 @@ module.exports = {
       .then(function(user){
         if(user){
           // retrieved existing user
-          res.status(200).send(user.fbId);
+          res.status(200).send(user);
           next(user)
         }else{
           // expand schema
@@ -29,7 +29,7 @@ module.exports = {
           // create new user
           new User(userDataFormatted).save()
             .then(function(newUser){
-              res.status(201).send(newUser.fbId);
+              res.status(201).send(newUser);
               next(newUser);
             });
         }
